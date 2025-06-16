@@ -1,13 +1,14 @@
 import js from '@eslint/js';
+// @ts-expect-error https://github.com/import-js/eslint-plugin-import/issues/3090
 import importPlugin from 'eslint-plugin-import';
 import perfectionist from 'eslint-plugin-perfectionist';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import { flatConfig as nextPlugin} from "eslint-config-next";
 
 export default tseslint.config(
   {
@@ -26,9 +27,11 @@ export default tseslint.config(
   importPlugin.flatConfigs.typescript,
   tseslint.configs.recommendedTypeChecked,
   tseslint.configs.stylisticTypeChecked,
+  // @ts-expect-error https://github.com/jsx-eslint/eslint-plugin-react/issues/3878
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
   reactHooks.configs['recommended-latest'],
+  nextPlugin.coreWebVitals,
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
@@ -48,7 +51,6 @@ export default tseslint.config(
     plugins: {
       perfectionist,
       react,
-      'react-refresh': reactRefresh,
       '@typescript-eslint': tseslint.plugin,
       'unused-imports': unusedImports,
     },
@@ -113,7 +115,6 @@ export default tseslint.config(
       ],
       'react/jsx-uses-react': 'off',
       'react/prop-types': 'off',
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'unused-imports/no-unused-imports': 'error',
     },
     settings: {

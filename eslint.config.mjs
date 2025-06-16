@@ -1,5 +1,7 @@
-import js from '@eslint/js';
-// @ts-expect-error https://github.com/import-js/eslint-plugin-import/issues/3090
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
 import importPlugin from 'eslint-plugin-import';
 import perfectionist from 'eslint-plugin-perfectionist';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
@@ -8,9 +10,18 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import { flatConfig as nextPlugin} from "eslint-config-next";
 
-export default tseslint.config(
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     ignores: [
       '*.config.*',
@@ -22,16 +33,12 @@ export default tseslint.config(
       'storybook-static',
     ],
   },
-  js.configs.recommended,
-  importPlugin.flatConfigs.recommended,
-  importPlugin.flatConfigs.typescript,
-  tseslint.configs.recommendedTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
-  // @ts-expect-error https://github.com/jsx-eslint/eslint-plugin-react/issues/3878
+  //importPlugin.flatConfigs.recommended,
+  //importPlugin.flatConfigs.typescript,
+  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
-  reactHooks.configs['recommended-latest'],
-  nextPlugin.coreWebVitals,
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
@@ -133,4 +140,7 @@ export default tseslint.config(
     },
   },
   eslintPluginPrettierRecommended
-);
+];
+
+
+export default eslintConfig;

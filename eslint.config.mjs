@@ -6,7 +6,6 @@ import importPlugin from 'eslint-plugin-import';
 import perfectionist from 'eslint-plugin-perfectionist';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -33,8 +32,6 @@ const eslintConfig = [
       'storybook-static',
     ],
   },
-  //importPlugin.flatConfigs.recommended,
-  //importPlugin.flatConfigs.typescript,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   react.configs.flat.recommended,

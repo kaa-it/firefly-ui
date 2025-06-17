@@ -1,4 +1,6 @@
 import js from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import importPlugin from 'eslint-plugin-import';
 import perfectionist from 'eslint-plugin-perfectionist';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
@@ -15,6 +17,7 @@ export default tseslint.config(
       '*.config.*',
       '**/*.d.ts',
       'dist',
+      '.next',
       'node_modules',
       'package*.json',
       'public',
@@ -29,10 +32,11 @@ export default tseslint.config(
   react.configs.flat.recommended,
   react.configs.flat['jsx-runtime'],
   reactHooks.configs['recommended-latest'],
+  jsxA11y.flatConfigs.recommended,
+  nextPlugin.flatConfig.coreWebVitals,
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
       parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: 'latest',
@@ -51,6 +55,7 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
       '@typescript-eslint': tseslint.plugin,
       'unused-imports': unusedImports,
+      '@next/next': nextPlugin,
     },
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
@@ -113,6 +118,13 @@ export default tseslint.config(
       ],
       'react/jsx-uses-react': 'off',
       'react/prop-types': 'off',
+      'jsx-a11y/alt-text': [
+        'warn',
+        {
+          elements: ['img'],
+          img: ['Image'],
+        },
+      ],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'unused-imports/no-unused-imports': 'error',
     },

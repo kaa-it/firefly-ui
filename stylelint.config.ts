@@ -1,5 +1,6 @@
-/** @type {import('stylelint').Config} */
-export default {
+import type { Config } from 'prettier';
+
+const config: Config = {
   extends: ['stylelint-config-standard'],
   ignoreFiles: ['**/fonts/', '**/images/'],
   plugins: ['stylelint-order'],
@@ -289,3 +290,5 @@ export default {
       '^[a-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(_[a-z0-9]+(-[a-z0-9]+)*)?(_[a-z0-9]+(-[a-z0-9]+)*)?$',
   },
 };
+
+export default config;
